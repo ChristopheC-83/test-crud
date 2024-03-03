@@ -9,9 +9,9 @@ import Link from "next/link";
 
 return (
     <div className="flex-wrap mx-auto flexMid">
-      <button type="button" className="button-type">
+      <Link href="/" className="button-type">
               Tous
-            </button>
+            </Link>
         {TYPES.map((type) => (
           <div key={type.slug} className="flex justify-center">
             <button type="button" className="button-type">
