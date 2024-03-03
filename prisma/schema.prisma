@@ -12,3 +12,30 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Users {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?  @unique
+  password  String
+  createdAt DateTime @default(now())
+  role      Role     @default(USER)
+  profile   String?  @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
+}
+
+model Characters {
+  id     Int    @id @default(autoincrement())
+  name   String
+  avatar String
+  pv     Int    @default(10)
+  pm     Int    @default(10)
+  dex    Int    @default(10)
+  const  Int    @default(10)
+  bio    String @default("-")
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}

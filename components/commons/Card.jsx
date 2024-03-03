@@ -9,7 +9,7 @@ export default function Card({ character }) {
     console.log("click");
   }
   return (
-    <div className="p-2 border rounded-lg border-amber-100 shadow-amber">
+    <div className="p-2 overflow-hidden border rounded-lg border-amber-100 shadow-amber">
       <div className="relative rounded-lg aspect-square">
         <Link href={`/character/${character.id}`} className="">
           <Image

@@ -5,7 +5,7 @@ import { CHARACTERS } from "@/utils/characters";
 export default function Home() {
   return (
     <div className="w-full">
-      <h2 className="text-center ">Liste de personnages</h2>
+      <h3 className="mb-2 text-center">Liste de personnages</h3>
 
       <ButtonsTypes />
 

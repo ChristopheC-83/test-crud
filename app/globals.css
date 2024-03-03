@@ -36,6 +36,19 @@ p {
 .button-type {
   @apply px-4 py-2 m-2 font-bold transition duration-300 rounded shadow bg-slate-500 hover:bg-slate-600 text-amber-200 hover:text-amber-300;
 }
-.shadow-amber{
-  box-shadow : 1px 1px 6px rgb(253 230 138) 
+.shadow-amber {
+  box-shadow: 1px 1px 6px rgb(253 230 138);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input{
+  @apply block w-full p-5 mb-4 text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100;
+}
+
+.customBtn{
+@apply px-4 py-2 duration-150 flexMid rounded-xl bg-amber-100 text-slate-800 hover:opacity-80
 }
