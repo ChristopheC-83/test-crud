@@ -2,32 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+h1 {
+  font-size: clamp(32px, calc(24px + 2.2vw), 60px);
+  letter-spacing: calc(1px + 0.12vw);
+  font-weight: bold;
+}
+h2 {
+  font-size: clamp(23px, calc(20px + 1.65vw), 40px);
+  letter-spacing: calc(1px + 0.04vw);
+  font-weight: bold;
+}
+h3 {
+  font-size: clamp(20px, calc(20px + 1vw), 29px);
+  letter-spacing: calc(1px + 0.02vw);
+  font-weight: bold;
+}
+h4 {
+  font-size: clamp(18px, calc(14px + 0.7vw), 22px);
+  line-height: clamp(22px, calc(20px + 1.2vw), 35px);
+  font-weight: bold;
+}
+p {
+  font-size: clamp(16px, calc(14px + 0.6vw), 20px);
+  line-height: clamp(20px, calc(20px + 1vw), 33px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.flexMid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.button-type {
+  @apply px-4 py-2 m-2 font-bold transition duration-300 rounded shadow bg-slate-500 hover:bg-slate-600 text-amber-200 hover:text-amber-300;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.shadow-amber{
+  box-shadow : 1px 1px 6px rgb(253 230 138) 
 }
