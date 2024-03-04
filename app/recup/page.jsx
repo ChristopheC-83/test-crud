@@ -25,7 +25,7 @@ export default function TestPage() {
   async function patchCharacter() {
     let data = { amountToAdd: toAdd };
     try {
-      const response = await fetch("/api/characters/2", {
+      const response = await fetch("/api/characters/1", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -63,6 +63,24 @@ export default function TestPage() {
     }
   }
 
+  async function createCharacter() {
+    try {
+      const response = await fetch("/api/characters/1", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify({ name: "Kiki" }),
+      });
+      console.log("c'est parti")
+      if (!response.ok) {
+        throw new Error("Erreur lors de la création du personnage");
+      }
+      console.log("Personnage créé");
+    } catch (error) {
+      console.error("Erreur lors de la création du personnage.", error);
+    }
+  }
   
 
   useEffect(() => {
@@ -87,6 +105,14 @@ export default function TestPage() {
         className="p-2 border rounded-lg border-amber-100 bg-slate-600 hover:bg-slate-700"
       >
         Supprimer Personnage
+      </button>
+      <br />
+      <br />
+      <button
+        onClick={createCharacter}
+        className="p-2 border rounded-lg border-amber-100 bg-slate-600 hover:bg-slate-700"
+      >
+        Créer Personnage
       </button>
     </div>
   );
