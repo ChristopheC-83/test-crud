@@ -9,9 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
+
+// pour faire une migration
+// $ npx prisma migrate dev --name init
 
 model Users {
   id        Int      @id @default(autoincrement())
@@ -27,12 +31,18 @@ model Characters {
   id     Int    @id @default(autoincrement())
   name   String
   avatar String
-  
+  type   String
   pv     Int    @default(10)
   pm     Int    @default(10)
   dex    Int    @default(10)
   const  Int    @default(10)
   bio    String @default("-")
+}
+
+model Types {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  slug String @unique
 }
 
 enum Role {
