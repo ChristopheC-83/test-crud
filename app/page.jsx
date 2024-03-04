@@ -1,8 +1,20 @@
+"use client";
+
 import Card from "@/components/commons/Card";
 import ButtonsTypes from "@/components/utilities/ButtonsTypes";
-import { CHARACTERS } from "@/utils/characters";
+import { useCharacters } from "@/hooks/useCharacters";
 
 export default function Home() {
+  const { data: characters, isFetching, error } = useCharacters();
+
+  if (isFetching) {
+    return <div>Chargement en cours...</div>;
+  }
+
+  if (error) {
+    return <div>Erreur : {error.message}</div>;
+  }
+  
   return (
     <div className="w-full">
       <h3 className="mb-2 text-center">Liste de personnages</h3>
@@ -10,7 +22,7 @@ export default function Home() {
       <ButtonsTypes />
 
       <div className="grid w-full grid-cols-2 gap-4 mx-auto my-4 md:grid-cols-3 lg:grid-cols-4">
-        {CHARACTERS.map((character) => (
+        {characters.map((character) => (
           <Card key={character.id} character={character} />
         ))}
       </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 export default function TestPage() {
@@ -7,13 +8,19 @@ export default function TestPage() {
 
   async function getCharacter() {
     try {
-      const response = await fetch("/api/characters/1", {
-        method: "GET",
+      // const response = await fetch("/api/characters/1", {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // const data = await response.json();
+      const { data } = await axios.get(`/api/characters/1`, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
+
       console.log(data);
       setPerso(data);
     } catch (error) {
@@ -33,10 +40,10 @@ export default function TestPage() {
         body: JSON.stringify({ amountToAdd: toAdd }),
       });
 
+      
       if (!response.ok) {
         throw new Error("Erreur lors de la modification du personnage");
       }
-
       console.log("data", data);
       console.log("PV du personnage augmentés de ", toAdd, " points.");
       getCharacter();
@@ -72,7 +79,7 @@ export default function TestPage() {
         },
         // body: JSON.stringify({ name: "Kiki" }),
       });
-      console.log("c'est parti")
+      console.log("c'est parti");
       if (!response.ok) {
         throw new Error("Erreur lors de la création du personnage");
       }
@@ -81,7 +88,6 @@ export default function TestPage() {
       console.error("Erreur lors de la création du personnage.", error);
     }
   }
-  
 
   useEffect(() => {
     getCharacter();
