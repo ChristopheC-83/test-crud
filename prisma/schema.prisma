@@ -24,14 +24,14 @@ model Users {
   password  String
   createdAt DateTime @default(now())
   role      Role     @default(USER)
-  profile   String?  @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
+  profile   String   @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
 }
 
 model Characters {
   id     Int    @id @default(autoincrement())
   name   String
-  avatar String
-  type   String
+  avatar String @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
+  type   String @default("chevalier")
   pv     Int    @default(10)
   pm     Int    @default(10)
   dex    Int    @default(10)

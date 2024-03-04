@@ -1,7 +1,7 @@
 import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";
 
-
+// get, post, put, patch, delete, head, options
 
 
 // Cet endpoint renvoie un personnage en fonction de son id
@@ -28,3 +28,48 @@ export const GET = async (req, { params }) => {
     );
   }
 };
+
+
+export const PATCH = async (req, { params }) => {
+  const { id } = params;
+  const body = await req.json()
+  const{amountToAdd} = body
+
+  try {
+    // Mettre à jour le personnage dans la base de données avec la nouvelle valeur des points de vie
+    const updatedCharacter = await prisma.characters.update({
+      where: { id: parseInt(id) },
+      data: { pv: {increment : amountToAdd} },
+    });
+
+    return NextResponse.json(updatedCharacter, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Erreur lors de la mise à jour du personnage." },
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (req, { params }) => {
+
+try {
+  const deletedCharacter = await prisma.characters.delete({
+    where: { id: parseInt(params.id) },
+  });
+  return NextResponse.json(deletedCharacter, { status: 200 });
+  
+} catch (error) {
+  return NextResponse.json(
+    { error: "Erreur lors de la suppression du personnage." },
+    { status: 500 })
+}
+
+
+
+
+
+
+}
+
+
