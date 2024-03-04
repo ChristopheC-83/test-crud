@@ -27,6 +27,7 @@ model Characters {
   id     Int    @id @default(autoincrement())
   name   String
   avatar String
+  
   pv     Int    @default(10)
   pm     Int    @default(10)
   dex    Int    @default(10)

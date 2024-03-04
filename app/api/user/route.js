@@ -1,8 +1,8 @@
+
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function POST(req) {
   try {
-    const users = await prisma.user.findMany();
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.error({ message: error.message });

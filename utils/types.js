@@ -1,22 +1,7 @@
 export const TYPES = [
-  {
-    name: "Magicien",
-    slug: "Magicien",
-  },
-  {
-    name: "Chevalier",
-    slug: "Chevalier",
-  },
-  {
-    name: "Tank",
-    slug: "Tank",
-  },
-  {
-    name: "Dragon",
-    slug: "Dragon",
-  },
-  {
-    name: "Sorcier",
-    slug: "Sorcier",
-  },
+  { id: 1, name: "Magicien", slug: "Magicien" },
+  { id: 2, name: "Chevalier", slug: "Chevalier" },
+  { id: 3, name: "Tank", slug: "Tank" },
+  { id: 4, name: "Dragon", slug: "Dragon" },
+  { id: 5, name: "Sorcier", slug: "Sorcier" },
 ];

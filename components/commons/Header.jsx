@@ -13,7 +13,7 @@ export default function Header() {
           <Link href="/">Ajouter</Link>
         </div>
         <div className="gap-3 flexMid">
-          <Button><h4>Connexion</h4></Button>
+          <Button><Link href="/connection"><h4>Connexion</h4></Link></Button>
         </div>
       </div>
     </Container>

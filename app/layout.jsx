@@ -2,6 +2,7 @@ import Container from "@/components/commons/Container";
 import "./globals.css";
 import Header from "@/components/commons/Header";
 import Footer from "@/components/commons/Footer";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col w-full min-h-screen bg-gradient-to-t from-slate-950 to-slate-800 text-amber-100">
         <Header />
         <div className="w-full h-[1px] bg-amber-100"></div>
+        <Toaster position="top-center" richColors expand={true} />
         <Container flex1>{children}</Container>
         <div className="w-full h-[1px] bg-amber-100"></div>
         <Footer />

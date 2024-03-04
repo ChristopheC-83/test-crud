@@ -13,9 +13,7 @@ export default function Type({ params }) {
     return <div>Aucun personnage trouvé avec le type {type}</div>;
   }
 
-  function handle() {
-    console.log("click");
-  }
+ 
 
   return (
     <div>
