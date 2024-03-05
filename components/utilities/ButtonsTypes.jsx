@@ -13,9 +13,9 @@ return (
               Tous
             </Link>
         {types.map((type) => (
-          <div key={type.slug} className="flex justify-center">
+          <div key={type.id} className="flex justify-center">
             <button type="button" className="button-type">
-              <Link href={`/type/${type.slug}`}>{type.type}</Link>
+              <Link href={`/characters/${type.slug}`}>{type.type}</Link>
             </button>
           </div>
         ))}

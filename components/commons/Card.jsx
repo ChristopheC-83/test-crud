@@ -23,7 +23,7 @@ export default function Card({ character }) {
       <h4 className="mt-3 text-center">{character.name}</h4>
       <div className="w-full mt-2 flexMid">
             <Button onClick={handle}>
-              <Link className="text-sm" href={`/type/${character.typeSlug}`}>{character.typeSlug}</Link>
+              <Link className="text-sm" href={`/characters/${character.typeSlug}`}>{character.typeSlug}</Link>
             </Button>
       </div>
       <div className="w-full p-2">
