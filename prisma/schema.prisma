@@ -28,21 +28,26 @@ model Users {
 }
 
 model Characters {
-  id     Int    @id @default(autoincrement())
-  name   String
-  avatar String @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
-  type   String @default("chevalier")
-  pv     Int    @default(10)
-  pm     Int    @default(10)
-  dex    Int    @default(10)
-  const  Int    @default(10)
-  bio    String @default("-")
+  id       Int    @id @default(autoincrement())
+  name     String
+  avatar   String @default("https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg")
+  pv       Int    @default(10)
+  pm       Int    @default(10)
+  dex      Int    @default(10)
+  const    Int    @default(10)
+  bio      String @default("-")
+  typeSlug String 
+  type     Type   @relation(fields: [typeSlug], references: [slug])
+
+  @@index([typeSlug])
 }
 
-model Types {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-  slug String @unique
+model Type {
+  id          Int          @id @default(autoincrement())
+  slug        String       @unique
+  type        String       @unique
+  logo        String?
+  Chraracters Characters[]
 }
 
 enum Role {

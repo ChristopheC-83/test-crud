@@ -6,7 +6,6 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
   try {
     const characters = await prisma.characters.findMany();
-
     return NextResponse.json(characters, { status: 200 });
   } catch (error) {
     return NextResponse.json(

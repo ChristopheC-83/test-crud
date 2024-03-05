@@ -16,14 +16,14 @@ export default function Card({ character }) {
             src={character.avatar}
             fill
             className="w-10/12 transition-all duration-300 aspect-square hover:scale-105"
-            alt={character.name}
+            alt={character.name} loading="lazy" 
           />
         </Link>
       </div>
       <h4 className="mt-3 text-center">{character.name}</h4>
       <div className="w-full mt-2 flexMid">
             <Button onClick={handle}>
-              <Link className="text-sm" href={`/type/${character.type}`}>{character.type}</Link>
+              <Link className="text-sm" href={`/type/${character.typeSlug}`}>{character.typeSlug}</Link>
             </Button>
       </div>
       <div className="w-full p-2">

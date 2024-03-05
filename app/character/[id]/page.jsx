@@ -42,6 +42,7 @@ export default function Character({ params }) {
           width={400}
           height={400}
           className="mx-auto : sm:mx-0"
+          loading="lazy" 
         />
         <div className="w-full">
           <h3 className="text-center">{character.name}</h3>
