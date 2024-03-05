@@ -1,9 +1,15 @@
-import { TYPES } from "@/utils/types"
-import { NextResponse } from "next/server"
 
+import prisma from "@/lib/connect";
+import { NextResponse } from "next/server";
 
-export const GET = async () =>{
-    return NextResponse.json(TYPES, {STATUE:200})
-
-
-}
+export const GET = async () => {
+  try {
+    const types = await prisma.type.findMany();
+    return NextResponse.json(types, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Pb de récupération des types." },
+      { status: 500 }
+    );
+  }
+};

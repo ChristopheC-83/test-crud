@@ -1,9 +1,9 @@
-import { TYPES } from "@/utils/types";
+
 import Link from "next/link";
 
 
 
- export default function ButtonsTypes() {
+ export default function ButtonsTypes({types}) {
 
 
 
@@ -12,10 +12,10 @@ return (
       <Link href="/" className="button-type">
               Tous
             </Link>
-        {TYPES.map((type) => (
+        {types.map((type) => (
           <div key={type.slug} className="flex justify-center">
             <button type="button" className="button-type">
-              <Link href={`/type/${type.slug}`}>{type.name}</Link>
+              <Link href={`/type/${type.slug}`}>{type.type}</Link>
             </button>
           </div>
         ))}
