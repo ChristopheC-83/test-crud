@@ -24,9 +24,7 @@ export default function CharactersByType({ params }) {
   if (error) {
     return <div>Erreur : {error.message}</div>;
   }
-  if (!isFetching) {
-    console.log(charactersByType);
-  }
+ 
 
   return (
     <div className="w-full">

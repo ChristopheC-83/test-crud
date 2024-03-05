@@ -3,7 +3,7 @@
 import Button from "@/components/utilities/Button";
 import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import { useCharacter } from "@/hooks/useCharacter";
-import { CHARACTERS } from "@/utils/characters";
+import { useTypes } from "@/hooks/useTypes";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,21 +12,23 @@ export default function Character({ params }) {
 
   // on renomme les données data en "character"
 
-  const { data : character , isFetching, error} = useCharacter(id);
+  const { data: character, isFetching, error } = useCharacter(id);
 
-  
+  const { data: types, isFetching: fetchingTypes } = useTypes();
+
   function handle() {
     console.log("click");
   }
-  
+
   if (isFetching) {
     return <div>Chargement en cours...</div>;
   }
-
+  if (fetchingTypes) {
+    return <div>Chargement en cours...</div>;
+  }
   if (error) {
     return <div>Erreur : {error.message}</div>;
   }
-
   if (!character) {
     return <div>Aucun personnage trouvé avec cet ID.</div>;
   }
@@ -34,7 +36,7 @@ export default function Character({ params }) {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-center">{character.name} en détails !</h3>
-      <ButtonsTypes />
+      <ButtonsTypes types={types}/>
       <div className="flex flex-col gap-6 sm:flex-row">
         <Image
           src={character.avatar}
@@ -42,14 +44,14 @@ export default function Character({ params }) {
           width={400}
           height={400}
           className="mx-auto : sm:mx-0"
-          loading="lazy" 
+          loading="lazy"
         />
         <div className="w-full">
           <h3 className="text-center">{character.name}</h3>
 
           <Button onClick={handle}>
-            <Link className="text-sm" href={`/type/${character.type}`}>
-              {character.type}
+            <Link className="text-sm" href={`/characters/${character.typeSlug}`}>
+              {character.typeSlug}
             </Link>
           </Button>
           <div className="mx-auto w-fit sm:mx-0">
@@ -63,7 +65,7 @@ export default function Character({ params }) {
               <p>Constitution :</p> <p>{character.const}</p>
             </div>
             <div className="flex justify-between">
-              <p>Dexterité :</p> <p>{character.dext}</p>
+              <p>Dexterité :</p> <p>{character.dex}</p>
             </div>
             <p className="my-2">Biographie : {character.bio}</p>
             <div className="flex justify-between w-[200px] mt-4">
