@@ -26,21 +26,36 @@ export default function Register() {
     const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
+
+    const newUser = {
+      name:name,
+      email:email,
+      password:password
+    }
+      
     if (!validationInputs(name, email, password)) {
       return;
     }
-    console.log("name", name);
-    console.log("email", email);
-    console.log("password", password);
+    // console.log("name", name);
+    // console.log("email", email);
+    // console.log("password", password);
     
     try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+
+      })
   
       if (response.error) {
         return toast.error(response.error);
       } else {
         toast.success("User created successfully");
         // replace au lieu de push pour éviter le retour en arrière
-        router.replace("/");
+        // router.replace("/");
       }
     } catch (error) {
       toast.error(error.message);
