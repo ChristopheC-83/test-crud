@@ -10,7 +10,7 @@ export default function Register() {
 
   function validationInputs(name, email, password) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!name ||!email || !password ) {
+    if (!name || !email || !password) {
       toast.error("Veuillez remplir tous les champs");
       return false;
     }
@@ -22,24 +22,23 @@ export default function Register() {
   }
 
   async function prepareCreateUser(formData) {
-
     const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
 
     const newUser = {
-      name:name,
-      email:email,
-      password:password
-    }
-      
+      name: name,
+      email: email,
+      password: password,
+    };
+
     if (!validationInputs(name, email, password)) {
       return;
     }
     // console.log("name", name);
     // console.log("email", email);
     // console.log("password", password);
-    
+
     try {
       const response = await fetch("/api/user", {
         method: "POST",
@@ -47,15 +46,16 @@ export default function Register() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newUser),
+      });
 
-      })
-  
-      if (response.error) {
-        return toast.error(response.error);
-      } else {
-        toast.success("User created successfully");
+      const responseData = await response.json();
+
+      if (response.ok) {
         // replace au lieu de push pour éviter le retour en arrière
+        toast.success("User created successfully");
         // router.replace("/");
+      } else {
+        return toast.error(responseData.error);
       }
     } catch (error) {
       toast.error(error.message);
@@ -83,8 +83,8 @@ export default function Register() {
           placeholder="Mot de Passe"
           className="input"
         />
-        <Button >
-          <p className="text-xl font-bold" >Créer un compte</p>
+        <Button>
+          <p className="text-xl font-bold">Créer un compte</p>
         </Button>
       </form>
       <Link href="/connection" className="customBtn">
