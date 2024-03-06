@@ -21,13 +21,18 @@ export default function Register() {
     return true;
   }
 
-  async function prepareCreateUser(name, email, password) {
-    // if (!validationInputs(name, email, password)) {
-    //   return;
-    // }
+  async function prepareCreateUser(formData) {
+
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    if (!validationInputs(name, email, password)) {
+      return;
+    }
     console.log("name", name);
     console.log("email", email);
     console.log("password", password);
+    
     try {
   
       if (response.error) {
