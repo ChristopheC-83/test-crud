@@ -14,3 +14,32 @@ export const GET = async () => {
     );
   }
 };
+
+export const POST = async (req, res) => {
+  const body = await req.json();
+  let { name, avatar, typeSlug, pv, pm, constit, dex } = body;
+  pv=parseInt(pv, 10);
+  pm=parseInt(pm, 10);
+  constit=parseInt(constit, 10);
+  dex=parseInt(dex, 10);
+  try {
+    const newCharacter = await prisma.characters.create({
+      data: {
+        name,
+        avatar,
+        typeSlug,
+        pv,
+        pm,
+        constit,
+        dex,
+      },
+    });
+    return NextResponse.json(newCharacter, { status: 200 });
+  } catch (error) {
+    console.log("error", error);
+    return NextResponse.json(
+      { error: "Erreur lors de la création du personnage." },
+      { status: 500 }
+    );
+  }
+};

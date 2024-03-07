@@ -7,10 +7,6 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const { data: session } = useSession();
-  console.log(session);
-  if (session) {
-    console.log(session.user.name);
-  }
 
   function logOut() {
     signOut(); //fonction de nextauth

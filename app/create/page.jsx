@@ -16,14 +16,10 @@ export default function CreateCharacter() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  if (characters) {
-    console.log("characters", characters);
-  }
-
-  if (!session) {
-    toast.error("Vous devez être connecté pour accéder à cette page");
-    router.replace("/connection");
-  }
+  // if (!session) {
+  //   toast.error("Vous devez être connecté pour accéder à cette page");
+  //   router.replace("/connection");
+  // }
   if (isFetching) {
     return <div>Chargement en cours...</div>;
   }
@@ -43,24 +39,40 @@ export default function CreateCharacter() {
   async function prepareCreateCharacter(formData) {
     const name = formData.get("name");
     const avatar = formData.get("avatar");
-    const type = formData.get("type");
+    const typeSlug = formData.get("typeSlug");
     const pv = formData.get("pv");
     const pm = formData.get("pm");
     const dex = formData.get("dex");
-    const constitution = formData.get("const");
+    const constit = formData.get("constit");
     const newCharacter = {
-      name: name,
-      avatar: avatar,
-      type: type,
-      pv: pv,
-      pm: pm,
-      dex: dex,
-      const: constitution,
+      name,
+      avatar,
+      typeSlug,
+      pv,
+      pm,
+      dex,
+      constit,
     };
-    if (!verificationInputs(name, avatar, type)) {
+    if (!verificationInputs(name, avatar, typeSlug)) {
       return;
     }
     console.log("newCharacter", newCharacter);
+    try {
+      const response = await fetch("/api/characters", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCharacter),
+      });
+      if (!response.ok) {
+        throw new Error("Erreur lors de la création du personnage");
+      }
+      router.push("/");
+      toast.success(name+" créé avec succés");
+    } catch (error) {
+      console.error("Erreur lors de la création du personnage.", error);
+    }
   }
 
   return (
@@ -69,25 +81,15 @@ export default function CreateCharacter() {
       <ButtonsTypes types={types} />
       <div className="flex flex-col gap-4 max-w-[600px] mx-auto w-full p-2 sm:p-4 ">
         <form action={prepareCreateCharacter}>
-          <input
-            type="text"
-            name="name"
-            placeholder="Nom du personnage"
-            className="input"
-          />
-          <input
-            type="text"
-            name="avatar"
-            placeholder="Avatar"
-            className="input"
-          />
+          <InputLabel label="Nom" type="text" name="name" />
+          <InputLabel label="Avatar" type="text" name="avatar" />
 
           {isFetching ? (
             <p>Chargement...</p>
           ) : (
             <select
               type="text"
-              name="type"
+              name="typeSlug"
               placeholder="Type"
               className="input"
             >
@@ -99,10 +101,30 @@ export default function CreateCharacter() {
               ))}
             </select>
           )}
-          <InputLabel label="Poins de Vie" type="number" name="pv" defaultValue="10"  />
-          <InputLabel label="Poins de Magie" type="number" name="pm" defaultValue="10"  />
-          <InputLabel label="Poins de Dextérité" type="number" name="dex" defaultValue="10"  />
-          <InputLabel label="Poins de Constitution" type="number" name="const" defaultValue="10"  />
+          <InputLabel
+            label="Points de Vie"
+            type="number"
+            name="pv"
+            defaultValue="10"
+          />
+          <InputLabel
+            label="Points de Magie"
+            type="number"
+            name="pm"
+            defaultValue="10"
+          />
+          <InputLabel
+            label="Points de Dextérité"
+            type="number"
+            name="dex"
+            defaultValue="10"
+          />
+          <InputLabel
+            label="Points de Constitution"
+            type="number"
+            name="constit"
+            defaultValue="10"
+          />
           <Button>
             <p className="text-xl font-bold">Créer le personnage</p>
           </Button>
