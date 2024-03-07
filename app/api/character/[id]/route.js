@@ -64,14 +64,19 @@ export const PATCH = async (req, { params }) => {
 };
 
 export const DELETE = async (req, { params }) => {
+  
+  let {id} = params;
+  console.log("id is ====", id);
+  id=parseInt(id);
+  console.log("id is ====", id);
   try {
     const deletedCharacter = await prisma.characters.delete({
-      where: { id: parseInt(params.id) },
+      where: { id  },
     });
     return NextResponse.json(deletedCharacter, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Erreur lors de la suppression du personnage." },
+      { error: "Erreur lors de la suppression du personnage !" },
       { status: 500 }
     );
   }

@@ -54,7 +54,7 @@ export default function TestPage() {
 
   async function deleteCharacter() {
     try {
-      const response = await fetch("/api/characters/2", {
+      const response = await fetch("/api/characters/25", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
