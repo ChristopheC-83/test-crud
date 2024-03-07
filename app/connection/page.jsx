@@ -6,10 +6,10 @@ import Button from "@/components/utilities/Button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 
 export default function Connection() {
-
 
     const router = useRouter();
 
@@ -32,6 +32,7 @@ export default function Connection() {
       if (!validationInputs(email, password)) {
         return;
       }
+      
       try {
         // nous utilisons ici le provider Credentials
         const response = await signIn("credentials", {
@@ -43,6 +44,7 @@ export default function Connection() {
         if (response.error) {
           return toast.error(response.error);
         }
+      
       } catch (error) {
         toast.error(error.message);
       }

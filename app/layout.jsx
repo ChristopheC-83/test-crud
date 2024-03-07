@@ -4,6 +4,7 @@ import Header from "@/components/commons/Header";
 import Footer from "@/components/commons/Footer";
 import { Toaster } from "sonner";
 import QueryProvider from "@/providers/query-provider";
+import AuthProvider from "@/providers/auth-provider";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,12 +16,14 @@ export default function RootLayout({ children }) {
     <html lang="fr">
       <body className="flex flex-col w-full min-h-screen bg-gradient-to-t from-slate-950 to-slate-800 text-amber-100">
         <QueryProvider>
-          <Header />
-          <div className="w-full h-[1px] bg-amber-100"></div>
-          <Toaster position="top-center" richColors expand={true} />
-          <Container flex1>{children}</Container>
-          <div className="w-full h-[1px] bg-amber-100"></div>
-          <Footer />
+          <AuthProvider>
+            <Header />
+            <div className="w-full h-[1px] bg-amber-100"></div>
+            <Toaster position="top-center" richColors expand={true} />
+            <Container flex1>{children}</Container>
+            <div className="w-full h-[1px] bg-amber-100"></div>
+            <Footer />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>
