@@ -6,6 +6,7 @@ import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import InputLabel from "@/components/utilities/InputLabel";
 import { useCharacters } from "@/hooks/useCharacters";
 import { useTypes } from "@/hooks/useTypes";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -58,20 +59,20 @@ export default function CreateCharacter() {
     }
     console.log("newCharacter", newCharacter);
     try {
-      const response = await fetch("/api/characters", {
-        method: "POST",
+      const response = await axios.post("/api/characters", newCharacter, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newCharacter),
       });
-      if (!response.ok) {
+  
+      if (!response.status === 200) {
         throw new Error("Erreur lors de la création du personnage");
       }
       router.push("/");
       toast.success("Création réussie de " + name);
     } catch (error) {
       console.error("Erreur lors de la création du personnage.", error);
+      toast.error("Erreur lors de la création du personnage");
     }
   }
 
