@@ -1,5 +1,7 @@
 import prisma from "@/lib/connect";
+import { useSession } from "next-auth/react";
 import { NextResponse } from "next/server";
+import { getAuthSession } from "../../auth/[...nextauth]/route";
 
 // get, post, put, patch, delete, head, options
 
@@ -7,6 +9,18 @@ import { NextResponse } from "next/server";
 //  qd il est appelé en GET
 
 export const GET = async (req, { params }) => {
+  // accessible seulement si user connecté
+  // ça doit venit en renfort de la protection côté client
+  // et permet de bloquer l'accès à l'endpoint de l'extérieur de l'application
+  const session = await getAuthSession();
+
+  if (!session || !session.user) {
+    return NextResponse.json(
+      { message: "Vous devez être connecté pour accéder à cette ressource" },
+      { status: 403 }
+    );
+  }
+
   const { id } = params;
   try {
     //  dans une constante
@@ -67,13 +81,14 @@ export const POST = async (req, res) => {
   // const body = await req.json();
   // const { name } = body;
   // console.log("name", {name});
-  console.log("go go go!!!")
+  console.log("go go go!!!");
   try {
     const newCharacter = await prisma.characters.create({
       data: {
-        name : "kiki",
-        avatar :"https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg",
-        type : "chevalier",
+        name: "kiki",
+        avatar:
+          "https://mycloud.barpat.fun/public/assets/Images/Bibliotheque/perso_rpg/elfe.jpg",
+        type: "chevalier",
       },
     });
     return NextResponse.json(newCharacter, { status: 200 });

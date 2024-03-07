@@ -13,32 +13,45 @@ export default function Header() {
   }
 
   function logOut() {
-    signOut();  //fonction de nextauth
+    signOut(); //fonction de nextauth
   }
-
-  return (
-    <Container>
-      <div className="flex items-center justify-between w-full text-2xl ">
-        <div>
-          <Link href="/">Accueil</Link>
-        </div>
-        <div>
-          <Link href="/">Ajouter</Link>
-        </div>
-        <div className="gap-3 flexMid">
-          {session?.user?.email ? (
-            <Button onClick={() => logOut()}>
-              <h4>Déconnexion</h4>
-            </Button>
-          ) : (
+  if (!session) {
+    return (
+      <Container>
+        <div className="flex items-center justify-between w-full text-2xl ">
+          <div>
+            <Link href="/">Accueil</Link>
+          </div>
+          <div>
             <Button>
               <Link href="/connection">
                 <h4>Connexion</h4>
               </Link>
             </Button>
-          )}
+          </div>
         </div>
-      </div>
-    </Container>
-  );
+      </Container>
+    );
+  }
+
+  if (session) {
+    return (
+      <Container>
+        <div className="flex items-center justify-between w-full text-2xl ">
+          <div>
+            <Link href="/">Accueil</Link>
+          </div>
+          <div className="flex gap-6">
+            <Link href="/create">Ajouter</Link>
+            <Link href="/profile">Profil</Link>
+          </div>
+          <div>
+            <Button onClick={logOut}>
+              <h4>Deconnexion</h4>
+            </Button>
+          </div>
+        </div>
+      </Container>
+    );
+  }
 }

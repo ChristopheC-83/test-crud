@@ -1,6 +1,6 @@
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import NextAuth from "next-auth/next";
+import NextAuth, { getServerSession } from "next-auth/next";
 
 export const authOptions = {
   providers: [
@@ -60,3 +60,7 @@ export const authOptions = {
 // on envoie l'objet user créé à nextauth
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
+
+
+// recupère la session pour utilisation coté serveur
+export const getAuthSession = () => getServerSession(authOptions);
