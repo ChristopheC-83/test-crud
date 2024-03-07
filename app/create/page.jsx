@@ -37,7 +37,26 @@ export default function CreateCharacter() {
     return true;
   }
 
-  async function prepareCreateCharacter(formData) {
+  async function createCharacter(newCharacter) {
+    try {
+      const response = await axios.post("/api/characters", newCharacter, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.status === 200) {
+        throw new Error("Erreur lors de la création du personnage");
+      }
+      router.push("/");
+      toast.success("Création réussie de " + name);
+    } catch (error) {
+      console.error("Erreur lors de la création du personnage.", error);
+      toast.error("Erreur lors de la création du personnage");
+    }
+  }
+
+  function prepareCreateCharacter(formData) {
     const name = formData.get("name");
     const avatar = formData.get("avatar");
     const typeSlug = formData.get("typeSlug");
@@ -57,23 +76,8 @@ export default function CreateCharacter() {
     if (!verificationInputs(name, avatar, typeSlug)) {
       return;
     }
-    console.log("newCharacter", newCharacter);
-    try {
-      const response = await axios.post("/api/characters", newCharacter, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      if (!response.status === 200) {
-        throw new Error("Erreur lors de la création du personnage");
-      }
-      router.push("/");
-      toast.success("Création réussie de " + name);
-    } catch (error) {
-      console.error("Erreur lors de la création du personnage.", error);
-      toast.error("Erreur lors de la création du personnage");
-    }
+
+    createCharacter(newCharacter);
   }
 
   return (
