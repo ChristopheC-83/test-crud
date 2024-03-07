@@ -44,10 +44,18 @@ export default function CreateCharacter() {
     const name = formData.get("name");
     const avatar = formData.get("avatar");
     const type = formData.get("type");
+    const pv = formData.get("pv");
+    const pm = formData.get("pm");
+    const dex = formData.get("dex");
+    const constitution = formData.get("const");
     const newCharacter = {
       name: name,
       avatar: avatar,
       type: type,
+      pv: pv,
+      pm: pm,
+      dex: dex,
+      const: constitution,
     };
     if (!verificationInputs(name, avatar, type)) {
       return;
@@ -91,10 +99,10 @@ export default function CreateCharacter() {
               ))}
             </select>
           )}
-          <InputLabel label="Poins de Vie" type="number" name="pv" placeholder="10"  />
-          <InputLabel label="Poins de Magie" type="number" name="pm" placeholder="10"  />
-          <InputLabel label="Poins de Dextérité" type="number" name="dex" placeholder="10"  />
-          <InputLabel label="Poins de Constitution" type="number" name="const" placeholder="10"  />
+          <InputLabel label="Poins de Vie" type="number" name="pv" defaultValue="10"  />
+          <InputLabel label="Poins de Magie" type="number" name="pm" defaultValue="10"  />
+          <InputLabel label="Poins de Dextérité" type="number" name="dex" defaultValue="10"  />
+          <InputLabel label="Poins de Constitution" type="number" name="const" defaultValue="10"  />
           <Button>
             <p className="text-xl font-bold">Créer le personnage</p>
           </Button>

@@ -3,6 +3,7 @@ export default function InputLabel({
   type = "text",
   name = "",
   placeholder = "",
+  defaultValue=""
 }) {
   return (
     <div className="w-full p-3 mb-4 text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 flex ">
@@ -11,6 +12,7 @@ export default function InputLabel({
         type={type}
         name={name}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className="text-amber-100 bg-neutral-800 pl-4 placeholder:text-amber-100"
       />
     </div>
