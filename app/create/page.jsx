@@ -69,7 +69,7 @@ export default function CreateCharacter() {
         throw new Error("Erreur lors de la création du personnage");
       }
       router.push("/");
-      toast.success(name+" créé avec succés");
+      toast.success("Création réussie de " + name);
     } catch (error) {
       console.error("Erreur lors de la création du personnage.", error);
     }

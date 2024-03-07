@@ -34,9 +34,9 @@ model Characters {
   pv       Int    @default(10)
   pm       Int    @default(10)
   dex      Int    @default(10)
-  constit    Int    @default(10)
+  constit  Int    @default(10)
   bio      String @default("-")
-  typeSlug String 
+  typeSlug String
   type     Type   @relation(fields: [typeSlug], references: [slug])
 
   @@index([typeSlug])

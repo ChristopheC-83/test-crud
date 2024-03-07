@@ -62,7 +62,7 @@ export default function Character({ params }) {
               <p>Points de Magie :</p> <p>{character.pm}</p>
             </div>
             <div className="flex justify-between">
-              <p>Constitution :</p> <p>{character.const}</p>
+              <p>Constitution :</p> <p>{character.constit}</p>
             </div>
             <div className="flex justify-between">
               <p>Dexterité :</p> <p>{character.dex}</p>

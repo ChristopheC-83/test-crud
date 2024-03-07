@@ -18,6 +18,7 @@ export const GET = async () => {
 export const POST = async (req, res) => {
   const body = await req.json();
   let { name, avatar, typeSlug, pv, pm, constit, dex } = body;
+  // on met les données numéraires en Int sur une base décimale
   pv=parseInt(pv, 10);
   pm=parseInt(pm, 10);
   constit=parseInt(constit, 10);
