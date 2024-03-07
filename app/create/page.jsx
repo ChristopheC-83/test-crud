@@ -3,16 +3,25 @@
 
 import Button from "@/components/utilities/Button";
 import ButtonsTypes from "@/components/utilities/ButtonsTypes";
+import InputLabel from "@/components/utilities/InputLabel";
+import { useCharacters } from "@/hooks/useCharacters";
 import { useTypes } from "@/hooks/useTypes";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function CreateCharacter() {
+  const { data: characters } = useCharacters();
   const { data: types, isFetching, error } = useTypes();
   const { data: session } = useSession();
   const router = useRouter();
 
+  if (characters) {
+    console.log("characters", characters);
+  }
+
   if (!session) {
+    toast.error("Vous devez être connecté pour accéder à cette page");
     router.replace("/connection");
   }
   if (isFetching) {
@@ -22,15 +31,27 @@ export default function CreateCharacter() {
     return <div>Erreur : {error.message}</div>;
   }
 
+  function verificationInputs(name, avatar, type) {
+    if (!name || !avatar || !type) {
+      toast.error("Veuillez remplir tous les champs");
+      return false;
+    }
+
+    return true;
+  }
+
   async function prepareCreateCharacter(formData) {
     const name = formData.get("name");
     const avatar = formData.get("avatar");
     const type = formData.get("type");
     const newCharacter = {
       name: name,
-      avatar:avatar,
+      avatar: avatar,
       type: type,
     };
+    if (!verificationInputs(name, avatar, type)) {
+      return;
+    }
     console.log("newCharacter", newCharacter);
   }
 
@@ -70,9 +91,13 @@ export default function CreateCharacter() {
               ))}
             </select>
           )}
-           <Button>
-          <p className="text-xl font-bold">Créer le personnage</p>
-        </Button>
+          <InputLabel label="Poins de Vie" type="number" name="pv" placeholder="10"  />
+          <InputLabel label="Poins de Magie" type="number" name="pm" placeholder="10"  />
+          <InputLabel label="Poins de Dextérité" type="number" name="dex" placeholder="10"  />
+          <InputLabel label="Poins de Constitution" type="number" name="const" placeholder="10"  />
+          <Button>
+            <p className="text-xl font-bold">Créer le personnage</p>
+          </Button>
         </form>
       </div>
     </div>
