@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 
 const getCharactersByType = (type) => async () => {
-  console.log("getCharactersByType", type);
+  // console.log("getCharactersByType", type);
   const { data } = await axios.get(`/api/characters/${type}`);
   return data;
 };

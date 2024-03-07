@@ -53,7 +53,7 @@ export default function Register() {
       if (response.ok) {
         // replace au lieu de push pour éviter le retour en arrière
         toast.success("User created successfully");
-        // router.replace("/");
+        router.push("/connection");
       } else {
         return toast.error(responseData.error);
       }
