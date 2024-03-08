@@ -34,6 +34,11 @@ export default function CreateCharacter() {
       return false;
     }
 
+    if (characters.find((character) => character.name === name)) {
+      toast.error("Ce nom est déjà utilisé");
+      return false;
+    }
+
     return true;
   }
 

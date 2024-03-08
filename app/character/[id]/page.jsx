@@ -3,6 +3,7 @@
 import Button from "@/components/utilities/Button";
 import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import { useCharacter } from "@/hooks/useCharacter";
+import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 import { useTypes } from "@/hooks/useTypes";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +15,7 @@ export default function Character({ params }) {
 
   const { data: character, isFetching, error } = useCharacter(id);
 
+  const deleteCharacter = useDeleteCharacterById();
   const { data: types, isFetching: fetchingTypes } = useTypes();
 
   function handle() {
@@ -75,7 +77,7 @@ export default function Character({ params }) {
                 </Button>
               </Link>
               <Link href="/">
-                <Button onClick={handle}>
+                <Button onClick={()=>deleteCharacter(character.id)}>
                   <p className="text-sm">Supprimer</p>
                 </Button>
               </Link>

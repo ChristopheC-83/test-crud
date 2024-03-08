@@ -4,36 +4,39 @@ import Link from "next/link";
 import Button from "../utilities/Button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 
 export default function Card({ character }) {
   
   const router = useRouter();
+  const deleteCharacter = useDeleteCharacterById();
+  
   function handle() {
     console.log("click");
   }
 
-  async function deleteCharacter(id) {
-    console.log(id);
-    try {
-      const response = await fetch(`/api/character/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  // async function deleteCharacter(id) {
+  //   console.log(id);
+  //   try {
+  //     const response = await fetch(`/api/character/${id}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Erreur lors de la Suppression du personnage");
-      }
-      toast.success("Personnage supprimé");
-      console.log("Personnage supprimé");
+  //     if (!response.ok) {
+  //       throw new Error("Erreur lors de la Suppression du personnage");
+  //     }
+  //     toast.success("Personnage supprimé");
+  //     console.log("Personnage supprimé");
       
-      router.push("/");
+  //     router.push("/");
       
-    } catch (error) {
-      console.error("Erreur lors de la modification du personnage.", error);
-    }
-  }
+  //   } catch (error) {
+  //     console.error("Erreur lors de la modification du personnage.", error);
+  //   }
+  // }
 
   return (
     <div className="p-2 overflow-hidden border rounded-lg border-amber-100 shadow-amber">
