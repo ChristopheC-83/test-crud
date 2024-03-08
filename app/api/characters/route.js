@@ -37,7 +37,6 @@ export const POST = async (req, res) => {
     });
     return NextResponse.json(newCharacter, { status: 200 });
   } catch (error) {
-    console.log("error", error);
     return NextResponse.json(
       { error: "Erreur lors de la création du personnage." },
       { status: 500 }

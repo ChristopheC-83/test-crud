@@ -1,4 +1,4 @@
-// Récupération de tous les personnages
+// Récupération de tous les personnages en fonction du type
 
 import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";

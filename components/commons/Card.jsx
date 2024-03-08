@@ -13,7 +13,6 @@ export default function Card({ character }) {
   }
 
   async function deleteCharacter(id) {
-    console.log(id);
     try {
       const response = await fetch(`/api/character/${id}`, {
         method: "DELETE",
@@ -26,12 +25,10 @@ export default function Card({ character }) {
         throw new Error("Erreur lors de la Suppression du personnage");
       }
       toast.success("Personnage supprimé");
-      console.log("Personnage supprimé");
-      
-      router.push("/");
+      router.replace("/");
       
     } catch (error) {
-      console.error("Erreur lors de la modification du personnage.", error);
+      toast.error("Erreur lors de la suppression du personnage");
     }
   }
 

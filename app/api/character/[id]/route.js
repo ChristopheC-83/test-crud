@@ -65,10 +65,7 @@ export const PATCH = async (req, { params }) => {
 
 export const DELETE = async (req, { params }) => {
   
-  let {id} = params;
-  console.log("id is ====", id);
-  id=parseInt(id);
-  console.log("id is ====", id);
+  
   try {
     const deletedCharacter = await prisma.characters.delete({
       where: { id  },
@@ -83,10 +80,6 @@ export const DELETE = async (req, { params }) => {
 };
 
 export const POST = async (req, res) => {
-  // const body = await req.json();
-  // const { name } = body;
-  // console.log("name", {name});
-  console.log("go go go!!!");
   try {
     const newCharacter = await prisma.characters.create({
       data: {
