@@ -6,14 +6,14 @@ export default function InputLabel({
   defaultValue=""
 }) {
   return (
-    <div className="w-full p-3 mb-4 text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 flex ">
-      <label className="w-1/2">{label}</label>
+    <div className="flex w-full p-3 mb-4 text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 ">
+      <label className="w-1/3">{label}</label>
       <input
         type={type}
         name={name}
         placeholder={placeholder}
         defaultValue={defaultValue}
-        className="text-amber-100 bg-neutral-800 pl-4 placeholder:text-amber-100"
+        className="w-full pl-4 text-amber-100 bg-neutral-800 placeholder:text-amber-100"
       />
     </div>
   );
