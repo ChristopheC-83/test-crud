@@ -12,14 +12,14 @@ export const GET = async (req, { params }) => {
   // accessible seulement si user connecté
   // ça doit venit en renfort de la protection côté client
   // et permet de bloquer l'accès à l'endpoint de l'extérieur de l'application
-  const session = await getAuthSession();
 
-  if (!session || !session.user) {
-    return NextResponse.json(
-      { message: "Vous devez être connecté pour accéder à cette ressource" },
-      { status: 403 }
-    );
-  }
+  // const session = await getAuthSession();
+  // if (!session || !session.user) {
+  //   return NextResponse.json(
+  //     { message: "Vous devez être connecté pour accéder à cette ressource" },
+  //     { status: 403 }
+  //   );
+  // }
 
   const { id } = params;
   try {
