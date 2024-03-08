@@ -12,14 +12,14 @@ export const GET = async (req, { params }) => {
   // accessible seulement si user connecté
   // ça doit venit en renfort de la protection côté client
   // et permet de bloquer l'accès à l'endpoint de l'extérieur de l'application
-  const session = await getAuthSession();
 
-  if (!session || !session.user) {
-    return NextResponse.json(
-      { message: "Vous devez être connecté pour accéder à cette ressource" },
-      { status: 403 }
-    );
-  }
+  // const session = await getAuthSession();
+  // if (!session || !session.user) {
+  //   return NextResponse.json(
+  //     { message: "Vous devez être connecté pour accéder à cette ressource" },
+  //     { status: 403 }
+  //   );
+  // }
 
   const { id } = params;
   try {
@@ -65,10 +65,7 @@ export const PATCH = async (req, { params }) => {
 
 export const DELETE = async (req, { params }) => {
   
-  let {id} = params;
-  console.log("id is ====", id);
-  id=parseInt(id);
-  console.log("id is ====", id);
+  
   try {
     const deletedCharacter = await prisma.characters.delete({
       where: { id  },
@@ -83,10 +80,6 @@ export const DELETE = async (req, { params }) => {
 };
 
 export const POST = async (req, res) => {
-  // const body = await req.json();
-  // const { name } = body;
-  // console.log("name", {name});
-  console.log("go go go!!!");
   try {
     const newCharacter = await prisma.characters.create({
       data: {

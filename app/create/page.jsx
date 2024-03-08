@@ -17,10 +17,10 @@ export default function CreateCharacter() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // if (!session) {
-  //   toast.error("Vous devez être connecté pour accéder à cette page");
-  //   router.replace("/connection");
-  // }
+  if (!session) {
+    toast.error("Vous devez être connecté pour accéder à cette page");
+    router.replace("/connection");
+  }
   if (isFetching) {
     return <div>Chargement en cours...</div>;
   }
@@ -31,6 +31,10 @@ export default function CreateCharacter() {
   function verificationInputs(name, avatar, type) {
     if (!name || !avatar || !type) {
       toast.error("Veuillez remplir tous les champs");
+      return false;
+    }
+    if (characters.find((character) => character.name === name)) {
+      toast.error("Ce nom est déjà utilisé");
       return false;
     }
 
@@ -56,7 +60,6 @@ export default function CreateCharacter() {
       router.push("/");
       toast.success("Création réussie de " + newCharacter.name);
     } catch (error) {
-      console.error("Erreur lors de la création du personnage.", error);
       toast.error("Erreur lors de la création du personnage");
     }
   }

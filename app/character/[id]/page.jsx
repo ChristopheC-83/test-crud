@@ -5,12 +5,15 @@ import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import { useCharacter } from "@/hooks/useCharacter";
 import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 import { useTypes } from "@/hooks/useTypes";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Character({ params }) {
   const { id } = params;
 
+  const { data: session } = useSession();
+  console.log(session);
   // on renomme les données data en "character"
 
   const { data: character, isFetching, error } = useCharacter(id);
@@ -38,7 +41,7 @@ export default function Character({ params }) {
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-center">{character.name} en détails !</h3>
-      <ButtonsTypes types={types}/>
+      <ButtonsTypes types={types} />
       <div className="flex flex-col gap-6 sm:flex-row">
         <Image
           src={character.avatar}
@@ -52,7 +55,10 @@ export default function Character({ params }) {
           <h3 className="text-center">{character.name}</h3>
 
           <Button onClick={handle}>
-            <Link className="text-sm" href={`/characters/${character.typeSlug}`}>
+            <Link
+              className="text-sm"
+              href={`/characters/${character.typeSlug}`}
+            >
               {character.typeSlug}
             </Link>
           </Button>
@@ -77,7 +83,7 @@ export default function Character({ params }) {
                 </Button>
               </Link>
               <Link href="/">
-                <Button onClick={()=>deleteCharacter(character.id)}>
+                <Button onClick={handle}>
                   <p className="text-sm">Supprimer</p>
                 </Button>
               </Link>

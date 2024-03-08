@@ -51,7 +51,6 @@ export async function POST(req, res) {
 
     return NextResponse.json(newUser, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de la création du personnage :", error);
     return NextResponse.json(
       { error: "Erreur lors de la création du personnage." },
       { status: 500 }
