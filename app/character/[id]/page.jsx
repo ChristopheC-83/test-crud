@@ -5,20 +5,20 @@ import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import { useCharacter } from "@/hooks/useCharacter";
 import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 import { useTypes } from "@/hooks/useTypes";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Character({ params }) {
   const { id } = params;
+  const { data: session } = useSession();
 
   // on renomme les données data en "character"
   const { data: character, isFetching, error } = useCharacter(id);
   const { data: types, isFetching: fetchingTypes } = useTypes();
   const deleteCharacter = useDeleteCharacterById();
 
-  function handle() {
-    console.log("click");
-  }
+
 
   if (isFetching) {
     return <div>Chargement en cours...</div>;
@@ -49,7 +49,7 @@ export default function Character({ params }) {
         <div className="w-full">
           <h3 className="text-center">{character.name}</h3>
 
-          <Button onClick={handle}>
+          <Button>
             <Link
               className="text-sm"
               href={`/characters/${character.typeSlug}`}
@@ -71,18 +71,23 @@ export default function Character({ params }) {
               <p>Dexterité :</p> <p>{character.dex}</p>
             </div>
             <p className="my-2">Biographie : {character.bio}</p>
-            <div className="flex justify-between w-[200px] mt-4">
-              <Link href="/">
-                <Button onClick={handle}>
-                  <p className="text-sm">Modifier</p>
-                </Button>
-              </Link>
-              <Link href="/">
-                <Button onClick={() => deleteCharacter(character.id)}>
-                  <p className="text-sm">Supprimer</p>
-                </Button>
-              </Link>
-            </div>
+            {session && (
+              <div className="flex justify-between w-[200px] mt-4">
+                <Link href={`/character/updateCharacter/${character.id}`}>
+                  <Button>
+                    <p className="text-sm">Modifier</p>
+                  </Button>
+                </Link>
+                {session?.user?.role ===
+                  "ADMIN" && (
+                    <Link href="/">
+                      <Button onClick={() => deleteCharacter(character.id)}>
+                        <p className="text-sm">Supprimer</p>
+                      </Button>
+                    </Link>
+                  )}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { useCharacter } from "@/hooks/useCharacter";
 import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 import { useTypes } from "@/hooks/useTypes";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,6 +16,10 @@ import { toast } from "sonner";
 
 export default function Character({ params }) {
   const { id } = params;
+  const { data: session } = useSession();
+  
+  if(session){
+  console.log(session.user.role)}
 
   // on renomme les données data en "character"
   const { data: character, isFetching, error } = useCharacter(id);
@@ -26,9 +31,6 @@ export default function Character({ params }) {
     setCharacterData(character)
   }, [character])
 
-  function handle() {
-    console.log("click");
-  }
 
   if (isFetching) {
     return <div>Chargement en cours...</div>;
@@ -43,6 +45,7 @@ export default function Character({ params }) {
     return <div>Aucun personnage trouvé avec cet ID.</div>;
   }
 
+  // vérification ddes données > 0 obligatoirement
   function verificationInputs(characteristic, newValue) {
     if (!newValue || newValue <= 0) {
       toast.error(`${characteristic} doit avoir une valeur positive.`);
@@ -50,10 +53,9 @@ export default function Character({ params }) {
     }
     return true;
   }
-
+  
+  // 
   async function updateCharacteristic(characteristic, newValue) {
-    console.log(character.id, characteristic, newValue);
-    console.log(character)
     try {
       const response = await axios.patch(`/api/character/${character.id}`, {
         characteristic,
@@ -63,7 +65,7 @@ export default function Character({ params }) {
       if (response.status !== 200) {
         throw new Error("Erreur lors de la modification de la caractéristique");
       }
-      setCharacterData(characterData[characteristic] = newValue)
+      setCharacterData({...characterData, [characteristic]: newValue})
       return true;
     } catch (error) {
       console.error(
@@ -73,6 +75,7 @@ export default function Character({ params }) {
     }
   }
 
+  // on recup une valeur et une caracteristique à mettre à jour
   function prepareUpdateCharacteristic(characteristic) {
     const input = document.querySelector(`input[name="${characteristic}"]`);
     const newValue = parseInt(input.value);
@@ -92,14 +95,17 @@ export default function Character({ params }) {
       <h3 className="text-center">Modifions {character.name} !</h3>
       <ButtonsTypes types={types} />
       <div className="flex flex-col gap-6 sm:flex-row">
-        <Image
-          src={character.avatar}
-          alt={character.name}
-          width={400}
-          height={400}
-          className="mx-auto : sm:mx-0"
-          loading="lazy"
-        />
+        <div className="max-h-[600px] max-w-[600px] aspect-square">
+          <Image
+            src={character.avatar}
+            alt={character.name}
+            width={600}
+            height={600}
+            objectFit="cover"
+            className="mx-auto : sm:mx-0 aspect-square"
+            loading="lazy"
+          />
+        </div>
         <div className="w-full">
           <h3 className="text-center">{character.name}</h3>
 
@@ -113,7 +119,7 @@ export default function Character({ params }) {
           </Button>
           <div className="mx-auto my-4 w-fit sm:mx-0">
             <div className="flex justify-between">
-              <p>Points de Vie :</p> <p>{character.pv}</p>
+              <p>Points de Vie :</p> <p>{characterData?.pv}</p>
             </div>
 
             <InputLabelBtn
@@ -124,22 +130,42 @@ export default function Character({ params }) {
               onClick={() => prepareUpdateCharacteristic("pv")}
             />
             <div className="flex justify-between">
-              <p>Points de Magie :</p> <p>{character.pm}</p>
+              <p>Points de Magie :</p> <p>{characterData?.pm}</p>
             </div>
+            <InputLabelBtn
+              label="Nouveaux PM"
+              type="number"
+              name="pm"
+              defaultValue={character.pm}
+              onClick={() => prepareUpdateCharacteristic("pm")}
+            />
             <div className="flex justify-between">
-              <p>Constitution :</p> <p>{character.constit}</p>
-            </div>
+              <p>Constitution :</p> <p>{characterData?.constit}</p>
+            </div><InputLabelBtn
+              label="Nouvelle Constitution"
+              type="number"
+              name="constit"
+              defaultValue={character.constit}
+              onClick={() => prepareUpdateCharacteristic("constit")}
+            />
             <div className="flex justify-between">
-              <p>Dexterité :</p> <p>{character.dex}</p>
+              <p>Dexterité :</p> <p>{characterData?.dex}</p>
             </div>
-            <p className="my-2">Biographie : {character.bio}</p>
-            <div className="flex justify-between w-[200px] mt-6">
+            <InputLabelBtn
+              label="Nouvelle Dextérité"
+              type="number"
+              name="dex"
+              defaultValue={character.dex}
+              onClick={() => prepareUpdateCharacteristic("dex")}
+            />
+            <p className="my-2">Biographie : {characterData?.bio}</p>
+            {session?.user?.role==="ADMIN" && (<div className="flex justify-between w-[200px] mt-6">
               <Link href="/">
                 <Button onClick={() => deleteCharacter(character.id)}>
                   <p className="text-sm">Supprimer</p>
                 </Button>
               </Link>
-            </div>
+            </div>)}
           </div>
         </div>
       </div>
