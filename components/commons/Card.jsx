@@ -2,37 +2,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../utilities/Button";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
+import { useSession } from "next-auth/react";
 
 export default function Card({ character }) {
-  
+  const { data: session } = useSession();
+
   const router = useRouter();
   const deleteCharacter = useDeleteCharacterById();
-  
+
   function handle() {
     console.log("click");
-  }
-
-  async function deleteCharacter(id) {
-    try {
-      const response = await fetch(`/api/character/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de la Suppression du personnage");
-      }
-      toast.success("Personnage supprimé");
-      router.replace("/");
-      
-    } catch (error) {
-      toast.error("Erreur lors de la suppression du personnage");
-    }
   }
 
   return (
@@ -61,18 +42,20 @@ export default function Card({ character }) {
           <p>PV : {character.pv}</p>
           <p>PM : {character.pm}</p>
         </div>
-        <div className="flex justify-between mt-4">
-          <Link href="/">
-            <Button onClick={handle}>
-              <p className="text-sm">Modifier</p>
-            </Button>
-          </Link>
-          <Link href="/">
-            <Button onClick={()=>deleteCharacter(character.id)}>
-              <p className="text-sm">Supprimer</p>
-            </Button>
-          </Link>
-        </div>
+        {session && (
+          <div className="flex justify-between mt-4">
+            <Link href="/">
+              <Button onClick={handle}>
+                <p className="text-sm">Modifier</p>
+              </Button>
+            </Link>
+            <Link href="/">
+              <Button onClick={() => deleteCharacter(character.id)}>
+                <p className="text-sm">Supprimer</p>
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

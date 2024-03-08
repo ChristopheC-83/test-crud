@@ -65,7 +65,8 @@ export const PATCH = async (req, { params }) => {
 
 export const DELETE = async (req, { params }) => {
   
-  
+  let {id} = params;
+  id = parseInt(id);
   try {
     const deletedCharacter = await prisma.characters.delete({
       where: { id  },
