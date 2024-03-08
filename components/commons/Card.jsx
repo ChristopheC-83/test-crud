@@ -44,10 +44,10 @@ export default function Card({ character }) {
         </div>
         {session && (
           <div className="flex justify-between mt-4">
-            <Link href="/">
-              <Button onClick={handle}>
-                <p className="text-sm">Modifier</p>
-              </Button>
+            <Link href={`/character/updateCharacter/${character.id}`}>
+                <Button>
+                  <p className="text-sm">Modifier</p>
+                </Button>
             </Link>
             <Link href="/">
               <Button onClick={() => deleteCharacter(character.id)}>

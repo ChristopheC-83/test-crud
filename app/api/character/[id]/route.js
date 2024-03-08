@@ -42,16 +42,21 @@ export const GET = async (req, { params }) => {
   }
 };
 
+
+// MAJ dynamique des caractéristiques
 export const PATCH = async (req, { params }) => {
   const { id } = params;
   const body = await req.json();
-  const { amountToAdd } = body;
+  const { characteristic, newValue } = body;
 
   try {
-    // Mettre à jour le personnage dans la base de données avec la nouvelle valeur des points de vie
+
+    const updateData = {};
+    updateData[characteristic] = parseInt(newValue) ;
+
     const updatedCharacter = await prisma.characters.update({
       where: { id: parseInt(id) },
-      data: { pv: { increment: amountToAdd } },
+      data: updateData,
     });
 
     return NextResponse.json(updatedCharacter, { status: 200 });
@@ -64,12 +69,11 @@ export const PATCH = async (req, { params }) => {
 };
 
 export const DELETE = async (req, { params }) => {
-  
-  let {id} = params;
+  let { id } = params;
   id = parseInt(id);
   try {
     const deletedCharacter = await prisma.characters.delete({
-      where: { id  },
+      where: { id },
     });
     return NextResponse.json(deletedCharacter, { status: 200 });
   } catch (error) {
