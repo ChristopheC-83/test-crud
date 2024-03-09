@@ -25,7 +25,17 @@ export default function Connection() {
       }
       return true;
     }
+
+    async function makeLocalStorage(email){
+      const response = await fetch(`/api/user/${email}`);
+      const data = await response.json();
+      delete data.password;
+      delete data.id;
+      localStorage.setItem("currentUser", JSON.stringify(data));
+      
+    }
   
+    // creation d'un localStorage pour stocker les données de l'utilisateur
     async function prepareLogin(formData) {
       const email = formData.get("email");
       const password = formData.get("password");
@@ -48,6 +58,7 @@ export default function Connection() {
       } catch (error) {
         toast.error(error.message);
       }
+      await makeLocalStorage(email)
       toast.success("Vous êtes connecté !");
       // replace au lieu de push pour éviter le retour en arrière
       router.replace("/");

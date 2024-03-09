@@ -10,6 +10,7 @@ export default function Header() {
 
   function logOut() {
     signOut(); //fonction de nextauth
+    localStorage.removeItem("currentUser");
   }
   if (!session) {
     return (

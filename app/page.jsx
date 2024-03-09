@@ -1,3 +1,5 @@
+// page d'accueil
+
 "use client";
 
 import Card from "@/components/commons/Card";
