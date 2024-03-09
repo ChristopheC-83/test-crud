@@ -43,7 +43,7 @@ export default function Character({ params }) {
           alt={character.name}
           width={400}
           height={400}
-          className="mx-auto : sm:mx-0"
+          className="mx-auto sm:mx-0"
           loading="lazy"
         />
         <div className="w-full">
