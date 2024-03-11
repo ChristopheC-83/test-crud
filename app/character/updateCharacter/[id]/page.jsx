@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
+import BioEditor from "@/components/utilities/BioEditor";
 import Button from "@/components/utilities/Button";
 import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import InputLabelBtn from "@/components/utilities/InputLabelBtn";
@@ -25,7 +26,6 @@ export default function Character({ params }) {
   // on renomme les données data en "character"
   const { data: character, isFetching, error } = useCharacter(id);
   const { data: types, isFetching: fetchingTypes } = useTypes();
-  const [content, setContent] = useState("");
   const deleteCharacter = useDeleteCharacterById();
 
   const [characterData, setCharacterData] = useState();
@@ -79,6 +79,7 @@ export default function Character({ params }) {
   // on recup une valeur et une caracteristique à mettre à jour
   function prepareUpdateCharacteristic(characteristic) {
     const input = document.querySelector(`input[name="${characteristic}"]`);
+
     const newValue = parseInt(input.value);
 
     if (!verificationInputs(characteristic, newValue)) {
@@ -88,22 +89,6 @@ export default function Character({ params }) {
       toast.success(`${characteristic} mise à jour`);
     } else {
       toast.error(`${characteristic} non mise à jour`);
-    }
-  }
-
-  async function handleSubmitBio() {
-    try {
-      const response = await axios.patch(`/api/updateBio/${character.id}`, {
-        bio: contentQuill,
-      });
-
-      if (response.status !== 200) {
-        throw new Error("Erreur lors de la modification de la biographie");
-      }
-      toast.success("Biographie mise à jour");
-      return true;
-    } catch (error) {
-      console.error("Erreur lors de la modification de la biographie.", error);
     }
   }
 
@@ -175,16 +160,7 @@ export default function Character({ params }) {
               defaultValue={character.dex}
               onClick={() => prepareUpdateCharacteristic("dex")}
             />
-
-            <>
-              <textarea
-                className="w-full p-3 resize-none md:text-lg sm:text-md h-72 font-semi-bold text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 "
-                placeholder={`La vie de ${character.name} `}
-                // ref={text}
-                name="text" 
-              ></textarea>
-              <button onClick={handleSubmitBio}>Enregistrer la biographie</button>
-            </>
+            <BioEditor character={character} />
 
             {session?.user?.role === "ADMIN" && (
               <div className="flex justify-between w-[200px] mt-6">
