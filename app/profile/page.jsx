@@ -8,18 +8,23 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Profil() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("currentUser"))
-  );
+  const [currentUser, setCurrentUser] = useState(null);
 
-  if (!currentUser || currentUser === null) {
-    router.push("/connection");
-    return;
-  }
+  useEffect(() => {
+    if (status === "loading") return; // Attendre que la session soit chargée
 
-  if (!currentUser.name) {
+    // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+    if (!session) {
+      router.push("/connection");
+    } else {
+      // Mettre à jour l'utilisateur actuel à partir du local storage
+      setCurrentUser(JSON.parse(localStorage.getItem("currentUser")));
+    }
+  }, [status, session, router]);
+
+  if (!currentUser) {
     return <div>chargement...</div>;
   }
 

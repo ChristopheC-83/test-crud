@@ -71,6 +71,9 @@ export default function Character({ params }) {
               <p>Dexterité :</p> <p>{character.dex}</p>
             </div>
             <p className="my-2">Biographie : {character.bio}</p>
+
+
+            
             {session && (
               <div className="flex justify-between w-[200px] mt-4">
                 <Link href={`/character/updateCharacter/${character.id}`}>

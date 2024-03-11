@@ -106,9 +106,9 @@ export default function CreateCharacter() {
               placeholder="Type"
               className="input"
             >
-              <option>Type du personnage</option>
+              <option  className="hover:bg-red-200">Type du personnage</option>
               {types.map((type) => (
-                <option key={type.id} value={type.slug}>
+                <option key={type.id} value={type.slug} className="hover:bg-red-200">
                   {type.type}
                 </option>
               ))}

@@ -17,20 +17,21 @@ import { toast } from "sonner";
 export default function Character({ params }) {
   const { id } = params;
   const { data: session } = useSession();
-  
-  if(session){
-  console.log(session.user.role)}
+
+  if (session) {
+    console.log(session.user.role);
+  }
 
   // on renomme les données data en "character"
   const { data: character, isFetching, error } = useCharacter(id);
   const { data: types, isFetching: fetchingTypes } = useTypes();
+  const [content, setContent] = useState("");
   const deleteCharacter = useDeleteCharacterById();
 
   const [characterData, setCharacterData] = useState();
   useEffect(() => {
-    setCharacterData(character)
-  }, [character])
-
+    setCharacterData(character);
+  }, [character]);
 
   if (isFetching) {
     return <div>Chargement en cours...</div>;
@@ -45,7 +46,7 @@ export default function Character({ params }) {
     return <div>Aucun personnage trouvé avec cet ID.</div>;
   }
 
-  // vérification ddes données > 0 obligatoirement
+  // vérification des données > 0 obligatoirement
   function verificationInputs(characteristic, newValue) {
     if (!newValue || newValue <= 0) {
       toast.error(`${characteristic} doit avoir une valeur positive.`);
@@ -53,8 +54,8 @@ export default function Character({ params }) {
     }
     return true;
   }
-  
-  // 
+
+  // MAJ dans la BDD
   async function updateCharacteristic(characteristic, newValue) {
     try {
       const response = await axios.patch(`/api/character/${character.id}`, {
@@ -65,7 +66,7 @@ export default function Character({ params }) {
       if (response.status !== 200) {
         throw new Error("Erreur lors de la modification de la caractéristique");
       }
-      setCharacterData({...characterData, [characteristic]: newValue})
+      setCharacterData({ ...characterData, [characteristic]: newValue });
       return true;
     } catch (error) {
       console.error(
@@ -90,23 +91,39 @@ export default function Character({ params }) {
     }
   }
 
+  async function handleSubmitBio() {
+    try {
+      const response = await axios.patch(`/api/updateBio/${character.id}`, {
+        bio: contentQuill,
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Erreur lors de la modification de la biographie");
+      }
+      toast.success("Biographie mise à jour");
+      return true;
+    } catch (error) {
+      console.error("Erreur lors de la modification de la biographie.", error);
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <h3 className="text-center">Modifions {character.name} !</h3>
       <ButtonsTypes types={types} />
-      <div className="flex flex-col gap-6 sm:flex-row">
-        <div className="max-h-[600px] max-w-[600px] aspect-square">
+      <div className="flex flex-col gap-6 mx-auto sm:flex-row w-fit">
+        <div className="max-h-[400px] max-w-[400px] aspect-square">
           <Image
             src={character.avatar}
             alt={character.name}
-            width={600}
-            height={600}
+            width={400}
+            height={400}
             objectFit="cover"
             className="mx-auto : sm:mx-0 aspect-square"
             loading="lazy"
           />
         </div>
-        <div className="w-full">
+        <div className="w-fit">
           <h3 className="text-center">{character.name}</h3>
 
           <Button>
@@ -121,7 +138,6 @@ export default function Character({ params }) {
             <div className="flex justify-between">
               <p>Points de Vie :</p> <p>{characterData?.pv}</p>
             </div>
-
             <InputLabelBtn
               label="Nouveaux PV"
               type="number"
@@ -141,7 +157,8 @@ export default function Character({ params }) {
             />
             <div className="flex justify-between">
               <p>Constitution :</p> <p>{characterData?.constit}</p>
-            </div><InputLabelBtn
+            </div>
+            <InputLabelBtn
               label="Nouvelle Constitution"
               type="number"
               name="constit"
@@ -158,14 +175,26 @@ export default function Character({ params }) {
               defaultValue={character.dex}
               onClick={() => prepareUpdateCharacteristic("dex")}
             />
-            <p className="my-2">Biographie : {characterData?.bio}</p>
-            {session?.user?.role==="ADMIN" && (<div className="flex justify-between w-[200px] mt-6">
-              <Link href="/">
-                <Button onClick={() => deleteCharacter(character.id)}>
-                  <p className="text-sm">Supprimer</p>
-                </Button>
-              </Link>
-            </div>)}
+
+            <>
+              <textarea
+                className="w-full p-3 resize-none md:text-lg sm:text-md h-72 font-semi-bold text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 "
+                placeholder={`La vie de ${character.name} `}
+                // ref={text}
+                name="text" 
+              ></textarea>
+              <button onClick={handleSubmitBio}>Enregistrer la biographie</button>
+            </>
+
+            {session?.user?.role === "ADMIN" && (
+              <div className="flex justify-between w-[200px] mt-6">
+                <Link href="/">
+                  <Button onClick={() => deleteCharacter(character.id)}>
+                    <p className="text-sm">Supprimer le personnage</p>
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </div>
