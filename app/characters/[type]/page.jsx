@@ -5,6 +5,7 @@ import ButtonsTypes from "@/components/utilities/ButtonsTypes";
 import { useCharactersByType } from "@/hooks/useCharactersByType";
 import { useTypes } from "@/hooks/useTypes";
 
+
 export default function CharactersByType({ params }) {
   const { type } = params;
 

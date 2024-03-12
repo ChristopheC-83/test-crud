@@ -18,8 +18,6 @@ export default function Character({ params }) {
   const { data: types, isFetching: fetchingTypes } = useTypes();
   const deleteCharacter = useDeleteCharacterById();
 
-
-
   if (isFetching) {
     return <div>Chargement en cours...</div>;
   }
@@ -32,6 +30,7 @@ export default function Character({ params }) {
   if (!character) {
     return <div>Aucun personnage trouvé avec cet ID.</div>;
   }
+
 
   return (
     <div className="flex flex-col gap-4">
@@ -71,10 +70,9 @@ export default function Character({ params }) {
               <p>Dexterité :</p> <p>{character.dex}</p>
             </div>
             <p className="my-2">Biographie : </p>
-            <p>{character.bio}</p>
+            {/* pour décoder les caractères html */}
+            <div dangerouslySetInnerHTML={{ __html: character.bio }} />
 
-
-            
             {session && (
               <div className="flex justify-between w-[200px] mt-4">
                 <Link href={`/character/updateCharacter/${character.id}`}>
@@ -82,14 +80,13 @@ export default function Character({ params }) {
                     <p className="text-sm">Modifier</p>
                   </Button>
                 </Link>
-                {session?.user?.role ===
-                  "ADMIN" && (
-                    <Link href="/">
-                      <Button onClick={() => deleteCharacter(character.id)}>
-                        <p className="text-sm">Supprimer</p>
-                      </Button>
-                    </Link>
-                  )}
+                {session?.user?.role === "ADMIN" && (
+                  <Link href="/">
+                    <Button onClick={() => deleteCharacter(character.id)}>
+                      <p className="text-sm">Supprimer</p>
+                    </Button>
+                  </Link>
+                )}
               </div>
             )}
           </div>
