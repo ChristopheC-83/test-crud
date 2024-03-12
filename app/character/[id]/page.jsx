@@ -70,7 +70,8 @@ export default function Character({ params }) {
             <div className="flex justify-between">
               <p>Dexterité :</p> <p>{character.dex}</p>
             </div>
-            <p className="my-2">Biographie : {character.bio}</p>
+            <p className="my-2">Biographie : </p>
+            <p>{character.bio}</p>
 
 
             

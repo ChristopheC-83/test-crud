@@ -46,6 +46,7 @@ export const GET = async (req, { params }) => {
 // MAJ dynamique des caractéristiques
 export const PATCH = async (req, { params }) => {
   const { id } = params;
+  
   const body = await req.json();
   const { characteristic, newValue } = body;
 

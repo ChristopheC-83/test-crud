@@ -16,7 +16,7 @@ export default function InputLabelBtn({
         defaultValue={defaultValue}
         className="pl-4 text-amber-100 bg-neutral-800 placeholder:text-amber-100"
       />
-      <button onClick={onClick}>✅</button>
+      <button onClick={onClick} className="hover:opacity-80 hover:scale-110">✅</button>
     </div>
   );
 }

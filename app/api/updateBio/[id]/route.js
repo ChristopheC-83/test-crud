@@ -4,12 +4,11 @@ import prisma from "@/lib/connect";
 import { NextResponse } from "next/server";
 
 export const PATCH = async (req, { params }) => {
-  let { id } = params;
-  id = parseInt(id);
-
-
+  const { id } = params;
+  console.log("id====>", id)
   const body = await req.json();
   const { bio } = body;
+  console.log("bio====>", bio)
 
   try {
   const newBio = await prisma.characters.update({
