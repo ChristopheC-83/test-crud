@@ -36,7 +36,8 @@ export default function Character({ params }) {
     <div className="flex flex-col gap-4">
       <h3 className="text-center">{character.name} en détails !</h3>
       <ButtonsTypes types={types} />
-      <div className="flex flex-col gap-6 sm:flex-row">
+      <div className="flex flex-col gap-6 mx-auto sm:flex-row w-fit">
+        <div className="min-h-[300px] min-w-[300px] max-h-[400px] max-w-[400px] aspect-square mx-auto">
         <Image
           src={character.avatar}
           alt={character.name}
@@ -45,6 +46,7 @@ export default function Character({ params }) {
           className="mx-auto sm:mx-0"
           loading="lazy"
         />
+        </div>
         <div className="w-full">
           <h3 className="text-center">{character.name}</h3>
 

@@ -108,6 +108,8 @@ export default function Character({ params }) {
             loading="lazy"
           />
         </div>
+
+        
         <div className="w-fit">
           <h3 className="text-center">{character.name}</h3>
 
