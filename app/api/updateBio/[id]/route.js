@@ -5,18 +5,15 @@ import { NextResponse } from "next/server";
 
 export const PATCH = async (req, { params }) => {
   const { id } = params;
-  console.log("id====>", id)
+  // console.log("id====>", id)
   const body = await req.json();
   const { bio } = body;
-  console.log("bio====>", bio)
-
+  // console.log("bio====>", bio)
   try {
-  const newBio = await prisma.characters.update({
-    where: { id: parseInt(id) },
-    data: {bio : bio},
-  });
-
-  
+    const newBio = await prisma.characters.update({
+      where: { id: parseInt(id) },
+      data: { bio: bio },
+    });
     return NextResponse.json(newBio, { status: 200 });
   } catch (error) {
     console.log("error", error);
