@@ -2,9 +2,8 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
-export default function AvatarEditor({ character }) {
+export default function Test() {
   const [file, setFile] = useState();
   const [imageObjectUrl, setImageObjectUrl] = useState();
 
@@ -31,7 +30,7 @@ export default function AvatarEditor({ character }) {
           className="p-4 text-amber-100 bg-neutral-800 placeholder:text-amber-100 rounded-xl "
           type="file"
           name="image"
-          onChange={(e) => setFile(e.target.file)}
+          onChange={(e) => setFile(e.target.files)}
         />
         <button type="submit">Changer l'avatar</button>
       </form>

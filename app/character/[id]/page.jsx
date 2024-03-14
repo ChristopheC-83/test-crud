@@ -77,7 +77,7 @@ export default function Character({ params }) {
 
             {session && (
               <div className="flex justify-between w-[200px] mt-4">
-                <Link href={`/character/updateCharacter/${character.id}`}>
+                <Link href={`/updateCharacter/${character.id}`}>
                   <Button>
                     <p className="text-sm">Modifier</p>
                   </Button>

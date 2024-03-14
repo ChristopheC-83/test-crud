@@ -19,10 +19,8 @@ export default function Character({ params }) {
   const { id } = params;
   const { data: session } = useSession();
 
-  if (session) {
-    console.log(session.user.role);
-  }
-
+  const [file, setFile] = useState();
+  const [imageObjectUrl, setImageObjectUrl] = useState();
   // on renomme les données data en "character"
   const { data: character, isFetching, error } = useCharacter(id);
   const { data: types, isFetching: fetchingTypes } = useTypes();
@@ -45,6 +43,8 @@ export default function Character({ params }) {
   if (!character) {
     return <div>Aucun personnage trouvé avec cet ID.</div>;
   }
+
+
 
   // vérification des données > 0 obligatoirement
   function verificationInputs(characteristic, newValue) {
@@ -97,19 +97,23 @@ export default function Character({ params }) {
       <h3 className="text-center">Modifions {character.name} !</h3>
       <ButtonsTypes types={types} />
       <div className="flex flex-col gap-6 mx-auto sm:flex-row w-fit">
-        <div className="max-h-[400px] max-w-[400px] aspect-square">
-          <Image
-            src={character.avatar}
-            alt={character.name}
-            width={400}
-            height={400}
-            objectFit="cover"
-            className="mx-auto : sm:mx-0 aspect-square"
-            loading="lazy"
-          />
+        <div className="flex flex-col">
+          <div className="max-h-[400px] max-w-[400px] aspect-square ">
+            <Image
+              src={character.avatar}
+              alt={character.name}
+              width={400}
+              height={400}
+              objectFit="cover"
+              className="mx-auto rounded-lg : sm:mx-0 aspect-square"
+              loading="lazy"
+            />
+          </div>
+          <div className="flex flex-col w-full mt-6">
+     
+      <div className="relative w-40 h-40 mx-auto my-4 aspect-square"></div>
+    </div>
         </div>
-
-        
         <div className="w-fit">
           <h3 className="text-center">{character.name}</h3>
 
@@ -129,7 +133,7 @@ export default function Character({ params }) {
               label="Nouveaux PV"
               type="number"
               name="pv"
-              defaultValue={character.pv}
+              defaultValue={character?.pv}
               onClick={() => prepareUpdateCharacteristic("pv")}
             />
             <div className="flex justify-between">
@@ -139,7 +143,7 @@ export default function Character({ params }) {
               label="Nouveaux PM"
               type="number"
               name="pm"
-              defaultValue={character.pm}
+              defaultValue={character?.pm}
               onClick={() => prepareUpdateCharacteristic("pm")}
             />
             <div className="flex justify-between">
@@ -149,7 +153,7 @@ export default function Character({ params }) {
               label="Nouvelle Constitution"
               type="number"
               name="constit"
-              defaultValue={character.constit}
+              defaultValue={character?.constit}
               onClick={() => prepareUpdateCharacteristic("constit")}
             />
             <div className="flex justify-between">
@@ -159,7 +163,7 @@ export default function Character({ params }) {
               label="Nouvelle Dextérité"
               type="number"
               name="dex"
-              defaultValue={character.dex}
+              defaultValue={character?.dex}
               onClick={() => prepareUpdateCharacteristic("dex")}
             />
             <BioEditor character={character} />
@@ -167,7 +171,7 @@ export default function Character({ params }) {
             {session?.user?.role === "ADMIN" && (
               <div className="flex justify-between w-[200px] mt-6">
                 <Link href="/">
-                  <Button onClick={() => deleteCharacter(character.id)}>
+                  <Button onClick={() => deleteCharacter(character?.id)}>
                     <p className="text-sm">Supprimer le personnage</p>
                   </Button>
                 </Link>

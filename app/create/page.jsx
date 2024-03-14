@@ -95,7 +95,13 @@ export default function CreateCharacter() {
       <div className="flex flex-col gap-4 max-w-[600px] mx-auto w-full p-2 sm:p-4 ">
         <form action={prepareCreateCharacter}>
           <InputLabel label="Nom" type="text" name="name" />
-          <InputLabel label="Avatar" type="text" name="avatar" />
+          <input
+            className="p-3 mb-4 text-amber-100 bg-neutral-800 placeholder:text-amber-100 rounded-xl"
+            type="file"
+            name="image"
+            onChange={(e) => setFile(e.target.files)}
+          />
+
 
           {isFetching ? (
             <p>Chargement...</p>
@@ -106,9 +112,13 @@ export default function CreateCharacter() {
               placeholder="Type"
               className="input"
             >
-              <option  className="hover:bg-red-200">Type du personnage</option>
+              <option className="hover:bg-red-200">Type du personnage</option>
               {types.map((type) => (
-                <option key={type.id} value={type.slug} className="hover:bg-red-200">
+                <option
+                  key={type.id}
+                  value={type.slug}
+                  className="hover:bg-red-200"
+                >
                   {type.type}
                 </option>
               ))}

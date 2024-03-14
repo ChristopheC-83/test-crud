@@ -8,7 +8,7 @@ export default function InputLabelBtn({
 }) {
   return (
     <div className="flex w-full p-3 mb-4 text-amber-100 bg-neutral-800 rounded-xl placeholder:text-amber-100 ">
-      <label className="w-1/2">{label}</label>
+      <label className="w-1/2 pr-2 border-r border-amber-100">{label}</label>
       <input
         type={type}
         name={name}

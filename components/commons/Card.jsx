@@ -5,6 +5,7 @@ import Button from "../utilities/Button";
 import { useRouter } from "next/navigation";
 import { useDeleteCharacterById } from "@/hooks/useDeleteCharacterById";
 import { useSession } from "next-auth/react";
+import AvatarEditor from "../utilities/AvatarEditor";
 
 export default function Card({ character }) {
   const { data: session } = useSession();
@@ -44,7 +45,7 @@ export default function Card({ character }) {
         </div>
         {session && (
           <div className="flex justify-between mt-4">
-              <Link href={`/character/updateCharacter/${character.id}`}>
+              <Link href={`/updateCharacter/${character.id}`}>
                 <Button>
                   <p className="text-sm">Modifier</p>
                 </Button>
